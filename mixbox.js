@@ -71,7 +71,7 @@ serveMixJuice(async (path, params, bdata) => {
     for (let i = 0; i < n; i++) {
       res.push(parseInt((data[i + d]?.data || 0) * r));
     }
-    return res.join("\n");
+    return res.join("\n") + "\n";
   } else if (cmd == "MAX") {
     return parseInt(data.reduce((prev, cur) => parseInt(cur.data) > prev ? parseInt(cur.data): prev, Number.MIN_SAFE_INTEGER) * r) + "\n";
   } else if (cmd == "MIN") {
