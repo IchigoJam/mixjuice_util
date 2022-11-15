@@ -12,3 +12,7 @@ deno run -A mixbox.js 8080
 
 open http://localhost:8080/
 
+## Command
+
+[mixbox.js](mixbox.js)
+
