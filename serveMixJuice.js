@@ -28,6 +28,9 @@ export const serveMixJuice = (callback) => { // callback(path, data)
       }
       const body = req.method == "POST" ? new Uint8Array(await req.arrayBuffer()) : null;
       const res = await callback(pathname, searchParams, body);
+      if (!res) {
+        throw new Error("res is null");
+      }
       return new Response(res, {
         status: 200,
         statusText: "ok",
@@ -39,6 +42,16 @@ export const serveMixJuice = (callback) => { // callback(path, data)
       });
     } catch (e) {
       console.log(e);
+      const res = e.toString();
+      return new Response(res, {
+        status: 400,
+        statusText: "err",
+        headers: [
+          ["Access-Control-Allow-Origin", "*"],
+          ["Content-Length", res.length],
+          ["Content-Type", "text/plain"],
+        ],
+      });
     }
   }, { addr });
 };
