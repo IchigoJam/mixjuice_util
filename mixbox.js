@@ -73,20 +73,20 @@ serveMixJuice(async (path, params, bdata) => {
     }
     return res.join("\n");
   } else if (cmd == "MAX") {
-    return data.reduce((prev, cur) => parseInt(cur.data) > prev ? parseInt(cur.data): prev, -32768) * r + "\n";
+    return parseInt(data.reduce((prev, cur) => parseInt(cur.data) > prev ? parseInt(cur.data): prev, Number.MIN_SAFE_INTEGER) * r) + "\n";
   } else if (cmd == "MIN") {
-    return data.reduce((prev, cur) => parseInt(cur.data) < prev ? parseInt(cur.data): prev, 32767) * r + "\n";
+    return parseInt(data.reduce((prev, cur) => parseInt(cur.data) < prev ? parseInt(cur.data): prev, Number.MAX_SAFE_INTEGER) * r) + "\n";
   } else if (cmd == "SUM") {
-    return data.reduce((prev, cur) => parseInt(cur.data) + prev, 0) * r + "\n";
+    return parseInt(data.reduce((prev, cur) => parseInt(cur.data) + prev, 0) * r) + "\n";
   } else if (cmd == "AVE") {
-    return parseInt(data.reduce((prev, cur) => parseInt(cur.data) + prev, 0) / data.length) * r + "\n";
+    return parseInt(data.reduce((prev, cur) => parseInt(cur.data) + prev, 0) / data.length * r) + "\n";
   } else if (cmd == "RANK") {
     return data.reduce((prev, cur) => parseInt(cur.data) > d ? prev + 1 : prev, 1) + "\n";
   } else if (cmd == "SD") {
     const ave = data.reduce((prev, cur) => parseInt(cur.data) + prev, 0) / data.length;
     const s = Math.sqrt(data.reduce((prev, cur) => Math.pow(cur.data - ave, 2) + prev, 0) / data.length);
     const sd = (d - ave) / s * 10 + 50;
-    return parseInt(sd) + "\n";
+    return parseInt(sd * r) + "\n";
   }
   return "'" + path + " " + params; //  + " " + data;
 });
