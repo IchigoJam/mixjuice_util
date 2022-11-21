@@ -38,6 +38,8 @@ serveMixJuice(async (path, params, bdata) => {
   if (id != undefined) {
     if (params.get("LOCK") != undefined && json.owner == id) {
       json.locked = true;
+    } else if (params.get("UNLOCK") != undefined && json.owner == id) {
+      json.locked = false;
     } else {
       const d = parseInt(params.get("D"));
       if (isNaN(d)) {
@@ -57,7 +59,7 @@ serveMixJuice(async (path, params, bdata) => {
     await write(fn, json);
     return "OK";
   }
-  const cmd = params.get("C");
+  const cmd = params.get("C") || "GET";
   const flgunique = params.get("U") != undefined;
   const data = flgunique ? unique(json.data) : json.data;
   const d = parseInt(params.get("D")) || 0;
