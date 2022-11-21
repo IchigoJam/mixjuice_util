@@ -14,5 +14,70 @@ open http://localhost:8080/
 
 ## Command
 
-[mixbox.js](mixbox.js)
+- C: command
+- see also [mixbox.js](mixbox.js)
 
+### GET 取得 (省略時)
+
+- http://[::]:8080/p?C=GET&N=5
+- N: length
+- D: offset
+
+### put data データ追加
+
+- http://[::]:8080/p?ID=1&D=80
+- ID: ID
+- D: data
+
+### LOCK データ追加禁止
+
+- http://[::]:8080/p2?ID=1&LOCK
+- ID: ID (must be owner ID)
+- LOCK
+
+### LOCK データ追加許可
+
+- http://[::]:8080/p2?ID=1&UNLOCK
+- ID: ID (must be owner ID)
+- UNLOCK
+
+### LEN 長さ取得
+
+- http://[::]:8080/p?C=LEN
+- U: ID unique
+
+### MAX 最大値
+
+- http://[::]:8080/p?C=MAX
+- R: ratio
+
+### MIN 最小値
+
+- http://[::]:8080/p?C=MIN
+- R: ratio
+
+### SUM 合計値
+
+- http://[::]:8080/p?C=SUM
+- R: ratio
+
+### AVE 平均値
+
+- http://[::]:8080/p?C=AVE
+- R: ratio
+
+### RANK 順位
+
+- http://[::]:8080/p?C=RANK&D=80
+- D: data
+- R: ratio
+
+### SD 標準偏差
+
+- http://[::]:8080/p?C=SD&D=80
+- D: data
+- R: ratio
+
+## Blog
+
+- [blog](https://fukuno.jig.jp/3764)
