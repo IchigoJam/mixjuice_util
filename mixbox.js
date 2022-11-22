@@ -25,7 +25,7 @@ const unique = (json) => {
   return res;
 };
 
-const uniqueArray = (data, r, fcond) => {
+const uniqueArray = (data, r, fcond, isjson) => {
   const ids = {};
   for (const d of data) {
     const c = ids[d.id];
@@ -35,6 +35,9 @@ const uniqueArray = (data, r, fcond) => {
     } else if (fcond(n, ids[d.id])) {
       ids[d.id] = n;
     }
+  }
+  if (isjson) {
+    return JSON.stringify(ids, null, 2);
   }
   const res = [];
   for (const name in ids) {
@@ -90,6 +93,7 @@ serveMixJuice(async (path, params, bdata) => {
   const d = parseInt(params.get("D")) || 0;
   const n = parseInt(params.get("N")) || 1;
   const r = parseFloat(params.get("R")) || 1;
+  const isjson = params.get("JSON") != undefined || false;
 
   if (cmd == "LEN") {
     return data.length + "\n";
@@ -115,9 +119,9 @@ serveMixJuice(async (path, params, bdata) => {
     const sd = (d - ave) / s * 10 + 50;
     return parseInt(sd * r) + "\n";
   } else if (cmd == "UMIN") {
-    return uniqueArray(json.data, r, (a, b) => a < b);
+    return uniqueArray(json.data, r, (a, b) => a < b, isjson);
   } else if (cmd == "UMAX") {
-    return uniqueArray(json.data, r, (a, b) => a > b);
+    return uniqueArray(json.data, r, (a, b) => a > b, isjson);
   }
   return "'" + path + " " + params; //  + " " + data;
 });
