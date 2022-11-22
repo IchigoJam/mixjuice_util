@@ -88,11 +88,13 @@ open http://localhost:8080/
 
 - http://[::]:8080/p?C=UMIN
 - R: ratio
+- JSON: return as JSON
 
 ### UMAX IDユニークな最大値
 
 - http://[::]:8080/p?C=UMAX
 - R: ratio
+- JSON: return as JSON
 
 ## Blog
 
