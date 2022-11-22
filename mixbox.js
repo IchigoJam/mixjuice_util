@@ -71,7 +71,7 @@ serveMixJuice(async (path, params, bdata) => {
   } else if (cmd == "GET") {
     const res = [];
     for (let i = 0; i < n; i++) {
-      res.push(parseInt((data[i + d]?.data || 0) * r));
+      res.push(parseInt((data[data.length - 1 - (i + d)]?.data || 0) * r));
     }
     return res.join("\n") + "\n";
   } else if (cmd == "MAX") {
