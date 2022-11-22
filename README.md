@@ -78,6 +78,16 @@ open http://localhost:8080/
 - D: data
 - R: ratio
 
+### UMIN IDユニークな最小値
+
+- http://[::]:8080/p?C=UMIN
+- R: ratio
+
+### UMAX IDユニークな最大値
+
+- http://[::]:8080/p?C=UMAX
+- R: ratio
+
 ## Blog
 
 - [blog](https://fukuno.jig.jp/3764)

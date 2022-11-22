@@ -25,6 +25,25 @@ const unique = (json) => {
   return res;
 };
 
+const uniqueArray = (data, r, fcond) => {
+  const ids = {};
+  for (const d of data) {
+    const c = ids[d.id];
+    const n = parseInt(d.data);
+    if (!c) {
+      ids[d.id] = n;
+    } else if (fcond(n, ids[d.id])) {
+      ids[d.id] = n;
+    }
+  }
+  const res = [];
+  for (const name in ids) {
+    res.push(name);
+    res.push(parseInt(r * ids[name]));
+  }
+  return res.join("\n") + "\n";
+};
+
 serveMixJuice(async (path, params, bdata) => {
   //console.log("path", path, params, bdata)
   const name = path.split("/")[1].toLowerCase();
@@ -89,6 +108,10 @@ serveMixJuice(async (path, params, bdata) => {
     const s = Math.sqrt(data.reduce((prev, cur) => Math.pow(cur.data - ave, 2) + prev, 0) / data.length);
     const sd = (d - ave) / s * 10 + 50;
     return parseInt(sd * r) + "\n";
+  } else if (cmd == "UMIN") {
+    return uniqueArray(json.data, r, (a, b) => a < b);
+  } else if (cmd == "UMAX") {
+    return uniqueArray(json.data, r, (a, b) => a > b);
   }
   return "'" + path + " " + params; //  + " " + data;
 });
