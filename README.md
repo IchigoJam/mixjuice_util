@@ -41,6 +41,12 @@ open http://localhost:8080/
 - ID: ID (must be owner ID)
 - UNLOCK
 
+### CLEAR データ追加許可
+
+- http://[::]:8080/p2?ID=1&CLEAR
+- ID: ID (must be owner ID)
+- CLEAR
+
 ### LEN 長さ取得
 
 - http://[::]:8080/p?C=LEN

@@ -59,6 +59,12 @@ serveMixJuice(async (path, params, bdata) => {
       json.locked = true;
     } else if (params.get("UNLOCK") != undefined && json.owner == id) {
       json.locked = false;
+    } else if (params.get("CLEAR") != undefined && json.owner == id) {
+      if (json.locked) {
+        return "'LOCKED";
+      } else {
+        json.data = [];
+      }
     } else {
       const d = parseInt(params.get("D"));
       if (isNaN(d)) {
