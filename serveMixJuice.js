@@ -1,17 +1,31 @@
-import { serve } from "https://deno.land/std@0.114.0/http/server.ts";
-
 const port = Deno.args[0] || 7001;
 const hostname = "[::]"; // for IPv6
 //const hostname = "localhost"; // for IPv4
-const addr = hostname + ":" + port;
-console.log(`http://${addr}`)
+
+const options = {
+  port,
+  hostname,
+};
+
+const resError = (s) => {
+  const bin = new TextEncoder().encode(s);
+  return new Response(bin, {
+    status: 400,
+    statusText: "err",
+    headers: [
+      ["Access-Control-Allow-Origin", "*"],
+      ["Content-Length", bin.length],
+      ["Content-Type", "text/plain"],
+    ],
+  });
+};
 
 export const serveMixJuice = (callback) => { // callback(path, data)
-  serve(async (req) => {
+  Deno.serve(options, async (req) => {
     try {
       const { pathname, searchParams } = new URL(req.url);
       if (pathname == "/favicon.ico") {
-        return null;
+        return resError("no favicons");
       }
       //console.log(req, pathname);
       
@@ -43,15 +57,7 @@ export const serveMixJuice = (callback) => { // callback(path, data)
     } catch (e) {
       console.log(e);
       const res = e.toString();
-      return new Response(res, {
-        status: 400,
-        statusText: "err",
-        headers: [
-          ["Access-Control-Allow-Origin", "*"],
-          ["Content-Length", res.length],
-          ["Content-Type", "text/plain"],
-        ],
-      });
+      return resError(res);
     }
-  }, { addr });
+  });
 };
